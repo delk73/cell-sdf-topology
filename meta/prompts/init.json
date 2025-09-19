@@ -1,0 +1,65 @@
+{
+  "task": "Initialize cell-sdf-topology research repo",
+  "objective": "Stand up the repo skeleton with docs as SSOT and meta/prompts as provenance.",
+  "constraints": {
+    "style": "KISS, deterministic, reproducible",
+    "license": "MIT",
+    "structure": "docs for SSOT, meta/prompts for provenance, src+tests for future stubs"
+  },
+  "steps": [
+    "touch README.md LICENSE CITATION.cff .gitignore",
+    "mkdir -p docs meta/prompts/init meta/prompts/emit meta/prompts/audit src tests",
+    "touch src/__init__.py tests/test_placeholder.py",
+    "echo '# Cell SDF Topology' > README.md",
+    "populate LICENSE with MIT license text",
+    "populate CITATION.cff with repo citation metadata",
+    {
+      "file": ".gitignore",
+      "content": [
+        "# Python",
+        "__pycache__/",
+        "*.py[cod]",
+        "*.so",
+        "*.egg-info/",
+        ".pytest_cache/",
+        ".mypy_cache/",
+        "",
+        "# Environments",
+        ".env",
+        ".venv/",
+        "venv/",
+        "ENV/",
+        "",
+        "# Editors",
+        ".vscode/",
+        ".idea/",
+        "",
+        "# Data / outputs",
+        "output/",
+        "data/",
+        "*.log",
+        "*.tmp",
+        "*.bak"
+      ]
+    }
+  ],
+  "env": {
+    "python": ">=3.11",
+    "tools": ["pytest"],
+    "notes": "No heavy deps. Env setup can be as simple as `python -m venv .venv && pip install -r requirements.txt` later."
+  },
+  "outputs": {
+    "dirs": [
+      "docs/",
+      "meta/prompts/",
+      "src/",
+      "tests/"
+    ],
+    "files": [
+      "README.md",
+      "LICENSE",
+      "CITATION.cff",
+      ".gitignore"
+    ]
+  }
+}
