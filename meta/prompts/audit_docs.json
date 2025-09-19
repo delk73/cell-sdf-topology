@@ -20,7 +20,7 @@
     "No sections are empty or contain placeholders (e.g., TBD, lorem ipsum)",
     "Markdown syntax valid (headings, lists)",
     "Section order matches the emit_docs.json specification"
-  },
+  ],
   "outputs": {
     "status": "pass | fail",
     "report": "audit_docs_report.md"
