@@ -1,6 +1,6 @@
 {
   "task": "Emit initial design documentation",
-  "objective": "Generate SSOT docs capturing the Cell SDF Topology research design, based on the fleshed-out repo context.",
+  "objective": "Generate SSOT docs capturing the Cell SDF Topology research design, including core paradigm, operator catalog, signal/lineage models, and the role of residuals as discovery.",
   "constraints": {
     "style": "Markdown, clear headings, no filler text",
     "placement": "docs/"
@@ -8,7 +8,9 @@
   "outputs": {
     "files": [
       "docs/design_spec.md",
-      "docs/open_questions.md"
+      "docs/open_questions.md",
+      "docs/operator_catalog.md",
+      "docs/audit_spec.md"
     ]
   },
   "heredocs": {
@@ -24,11 +26,9 @@
       "- Signals and lineage attach to surfaces defined by F.",
       "",
       "## Topological Operators",
-      "- **Division**: cleavage plane operator with depth schedule.",
-      "- **Fusion**: neck operator with radius schedule.",
-      "- **Protrusion/Blebs**: local lobe operators.",
-      "- **Ruffling**: sinusoidal offsets.",
-      "- **Rounding**: isotropic deformation.",
+      "- Operators are defined and refined through fitting against voxel data.",
+      "- Known primitives: division, fusion, protrusion/blebs, ruffling, rounding.",
+      "- Catalog is data-driven: residual errors surface new operator archetypes.",
       "",
       "## Signal Model",
       "- Signals anchored at surfaces and regions (membrane, cytosol, nucleus).",
@@ -39,7 +39,7 @@
       "- Each cell identity tracked as a soft field Iᵢ(x,t).",
       "- World-tubes represent continuous life histories.",
       "- Division → tube splits; fusion → tubes merge.",
-      "- Events tied to operator schedules (s(t)) and topological persistence.",
+      "- Timing is determined by persistence of topological change and operator schedules (s(t)).",
       "",
       "## Storage Model and API",
       "- **Geometry**: base SDF, operator params, event schedules.",
@@ -47,10 +47,10 @@
       "- **Lineage**: identity schedules.",
       "- APIs: reconstruct voxel subvolumes, query surfaces, fetch signals, export lineage.",
       "",
-      "## Audit",
+      "## Audit and Discovery",
       "- **Quality gates**: Hausdorff error < threshold, eikonal regularity, locality checks.",
       "- **Provenance**: each value labeled as measured/interpolated/extrapolated.",
-      "- **Residuals**: mismatches flagged as novelty signal."
+      "- **Residuals**: systematic mismatches flagged as novelty → candidate new operators."
     ],
     "docs/open_questions.md": [
       "# Open Questions",
@@ -59,16 +59,63 @@
       "- Should geometry be modeled as a true 4D SDF F(x,y,z,t) or keyframes + deformations?",
       "",
       "## Operator Catalog Granularity",
-      "- How many primitive operators are sufficient to cover observed biology?",
+      "- How many primitives are enough to cover observed biology?",
+      "- When does a residual warrant a new operator vs improved fit?",
       "",
       "## Spectral Anchoring Resolution",
       "- How many shells or region samples are required to capture meaningful signal gradients?",
       "",
       "## Event Detection Robustness",
       "- How to avoid false positives from noise or transient constrictions?",
+      "- What persistence window is biologically reasonable?",
       "",
       "## Compute vs Storage",
       "- Optimal balance between upfront compute for fitting vs long-term storage savings?"
+    ],
+    "docs/operator_catalog.md": [
+      "# Operator Catalog (Data-Driven)",
+      "",
+      "Operators are not pre-defined abstractions but **fitted objects** derived from voxel data.",
+      "",
+      "## Current Primitives",
+      "- **Division**: cleavage plane operator with depth schedule.",
+      "- **Fusion**: neck operator with radius schedule.",
+      "- **Protrusion/Blebs**: local lobe operators.",
+      "- **Ruffling**: sinusoidal offsets along tangent frames.",
+      "- **Rounding**: isotropic deformation.",
+      "",
+      "## Process for Expansion",
+      "1. Fit known operators to voxel data.",
+      "2. Compute residuals.",
+      "3. Cluster persistent residuals.",
+      "4. If systematic, promote to a new operator archetype.",
+      "",
+      "## Catalog Entry Template",
+      "- **Name**: short identifier.",
+      "- **Definition**: SDF operator form.",
+      "- **Parameters**: knobs that define variations.",
+      "- **Provenance**: datasets where observed, fit residual metrics.",
+      "- **Biological interpretation**: mapping to observed process."
+    ],
+    "docs/audit_spec.md": [
+      "# Audit Spec",
+      "",
+      "## Purpose",
+      "Auditing ensures emitted docs and fitted operators remain consistent, reproducible, and scientifically grounded.",
+      "",
+      "## Audit Dimensions",
+      "- **Section completeness**: all required parts of SSOT docs present.",
+      "- **Quality gates**: geometric error, signal fidelity, eikonal constraint.",
+      "- **Residual analysis**: systematic mismatches flagged.",
+      "- **Lineage validation**: tube splits/merges align with persistent topology change.",
+      "",
+      "## Discovery Pipeline",
+      "- Residuals are not only QC but also signals of new biology.",
+      "- Candidate anomalies → reviewed as potential operator archetypes.",
+      "",
+      "## Outputs",
+      "- Audit reports (`audit_docs_report.md`) with pass/fail + notes.",
+      "- Residual heatmaps for visual inspection."
     ]
   }
 }
