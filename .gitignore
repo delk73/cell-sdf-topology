@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Environments
+.env
+.venv/
+venv/
+ENV/
+
+# Editors
+.vscode/
+.idea/
+
+# Data / outputs
+output/
+data/
+*.log
+*.tmp
+*.bak

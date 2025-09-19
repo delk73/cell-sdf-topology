@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it using the metadata from this file."
+title: "Cell SDF Topology"
+authors:
+  - name: "Dan Elkins"
+abstract: "Skeleton repository for time-conditioned signed distance field topology research."
+type: software
+license: MIT
+version: 0.0.1
+repository-code: "https://github.com/cell-sdf-topology/cell-sdf-topology"
+date-released: 2025-09-19
+keywords:
+  - signed-distance-fields
+  - cell-topology
+  - research
