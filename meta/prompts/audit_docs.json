@@ -23,10 +23,10 @@
   ],
   "outputs": {
     "status": "pass | fail",
-    "report": "audit_docs_report.md"
+    "report": "meta/outputs/audit_docs_report.md"
   },
   "heredocs": {
-    "audit_docs_report.md": [
+    "meta/outputs/audit_docs_report.md": [
       "# Audit Report — Documentation",
       "",
       "## Summary",
