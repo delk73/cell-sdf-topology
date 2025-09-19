@@ -1,0 +1,74 @@
+{
+  "task": "Emit initial design documentation",
+  "objective": "Generate SSOT docs capturing the Cell SDF Topology research design, based on the fleshed-out repo context.",
+  "constraints": {
+    "style": "Markdown, clear headings, no filler text",
+    "placement": "docs/"
+  },
+  "outputs": {
+    "files": [
+      "docs/design_spec.md",
+      "docs/open_questions.md"
+    ]
+  },
+  "heredocs": {
+    "docs/design_spec.md": [
+      "# Cell SDF Topology — Design Spec",
+      "",
+      "## Introduction",
+      "This document is the single source of truth (SSOT) for the **Cell SDF Topology** research project. It describes how time-conditioned signed distance fields (SDFs) can represent cell surfaces, including processes that change topology over time (division, fusion, etc.).",
+      "",
+      "## Core Paradigm: SDF as SSOT",
+      "- Geometry represented as **F(x,y,z,t)**.",
+      "- Voxel volumes are derived, not stored.",
+      "- Signals and lineage attach to surfaces defined by F.",
+      "",
+      "## Topological Operators",
+      "- **Division**: cleavage plane operator with depth schedule.",
+      "- **Fusion**: neck operator with radius schedule.",
+      "- **Protrusion/Blebs**: local lobe operators.",
+      "- **Ruffling**: sinusoidal offsets.",
+      "- **Rounding**: isotropic deformation.",
+      "",
+      "## Signal Model",
+      "- Signals anchored at surfaces and regions (membrane, cytosol, nucleus).",
+      "- Stored as curves (time series + spectra).",
+      "- Patch model: keyframes + deltas with provenance tags.",
+      "",
+      "## Lineage Model: Identities and World-Tubes",
+      "- Each cell identity tracked as a soft field Iᵢ(x,t).",
+      "- World-tubes represent continuous life histories.",
+      "- Division → tube splits; fusion → tubes merge.",
+      "- Events tied to operator schedules (s(t)) and topological persistence.",
+      "",
+      "## Storage Model and API",
+      "- **Geometry**: base SDF, operator params, event schedules.",
+      "- **Signals**: curve data with keyframe/deltas.",
+      "- **Lineage**: identity schedules.",
+      "- APIs: reconstruct voxel subvolumes, query surfaces, fetch signals, export lineage.",
+      "",
+      "## Audit",
+      "- **Quality gates**: Hausdorff error < threshold, eikonal regularity, locality checks.",
+      "- **Provenance**: each value labeled as measured/interpolated/extrapolated.",
+      "- **Residuals**: mismatches flagged as novelty signal."
+    ],
+    "docs/open_questions.md": [
+      "# Open Questions",
+      "",
+      "## Time-Varying Geometry",
+      "- Should geometry be modeled as a true 4D SDF F(x,y,z,t) or keyframes + deformations?",
+      "",
+      "## Operator Catalog Granularity",
+      "- How many primitive operators are sufficient to cover observed biology?",
+      "",
+      "## Spectral Anchoring Resolution",
+      "- How many shells or region samples are required to capture meaningful signal gradients?",
+      "",
+      "## Event Detection Robustness",
+      "- How to avoid false positives from noise or transient constrictions?",
+      "",
+      "## Compute vs Storage",
+      "- Optimal balance between upfront compute for fitting vs long-term storage savings?"
+    ]
+  }
+}
