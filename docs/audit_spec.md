@@ -11,7 +11,7 @@ Auditing ensures emitted docs and fitted operators remain consistent, reproducib
 
 ## Discovery Pipeline
 - Residuals are not only QC but also signals of new biology.
-- Candidate anomalies → reviewed as potential operator archetypes.
+- Candidate anomalies -> reviewed as potential operator archetypes.
 
 ## Outputs
 - Audit reports (`audit_docs_report.md`) with pass/fail + notes.

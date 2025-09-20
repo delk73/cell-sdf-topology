@@ -1,4 +1,4 @@
-# Cell SDF Topology — Design Spec
+# Cell SDF Topology - Design Spec
 
 ## Introduction
 This document is the single source of truth (SSOT) for the **Cell SDF Topology** research project. It describes how time-conditioned signed distance fields (SDFs) can represent cell surfaces, including processes that change topology over time (division, fusion, etc.).
@@ -19,9 +19,9 @@ This document is the single source of truth (SSOT) for the **Cell SDF Topology**
 - Patch model: keyframes + deltas with provenance tags.
 
 ## Lineage Model: Identities and World-Tubes
-- Each cell identity tracked as a soft field Iᵢ(x,t).
+- Each cell identity tracked as a soft field Ii(x,t).
 - World-tubes represent continuous life histories.
-- Division → tube splits; fusion → tubes merge.
+- Division -> tube splits; fusion -> tubes merge.
 - Timing is determined by persistence of topological change and operator schedules (s(t)).
 
 ## Storage Model and API
@@ -33,4 +33,4 @@ This document is the single source of truth (SSOT) for the **Cell SDF Topology**
 ## Audit and Discovery
 - **Quality gates**: Hausdorff error < threshold, eikonal regularity, locality checks.
 - **Provenance**: each value labeled as measured/interpolated/extrapolated.
-- **Residuals**: systematic mismatches flagged as novelty → candidate new operators.
+- **Residuals**: systematic mismatches flagged as novelty -> candidate new operators.

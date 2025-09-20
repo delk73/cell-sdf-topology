@@ -15,7 +15,7 @@
   },
   "heredocs": {
     "docs/design_spec.md": [
-      "# Cell SDF Topology — Design Spec",
+      "# Cell SDF Topology - Design Spec",
       "",
       "## Introduction",
       "This document is the single source of truth (SSOT) for the **Cell SDF Topology** research project. It describes how time-conditioned signed distance fields (SDFs) can represent cell surfaces, including processes that change topology over time (division, fusion, etc.).",
@@ -36,9 +36,9 @@
       "- Patch model: keyframes + deltas with provenance tags.",
       "",
       "## Lineage Model: Identities and World-Tubes",
-      "- Each cell identity tracked as a soft field Iᵢ(x,t).",
+      "- Each cell identity tracked as a soft field Ii(x,t).",
       "- World-tubes represent continuous life histories.",
-      "- Division → tube splits; fusion → tubes merge.",
+      "- Division -> tube splits; fusion -> tubes merge.",
       "- Timing is determined by persistence of topological change and operator schedules (s(t)).",
       "",
       "## Storage Model and API",
@@ -50,7 +50,7 @@
       "## Audit and Discovery",
       "- **Quality gates**: Hausdorff error < threshold, eikonal regularity, locality checks.",
       "- **Provenance**: each value labeled as measured/interpolated/extrapolated.",
-      "- **Residuals**: systematic mismatches flagged as novelty → candidate new operators."
+      "- **Residuals**: systematic mismatches flagged as novelty -> candidate new operators."
     ],
     "docs/open_questions.md": [
       "# Open Questions",
@@ -111,7 +111,7 @@
       "",
       "## Discovery Pipeline",
       "- Residuals are not only QC but also signals of new biology.",
-      "- Candidate anomalies → reviewed as potential operator archetypes.",
+      "- Candidate anomalies -> reviewed as potential operator archetypes.",
       "",
       "## Outputs",
       "- Audit reports (`audit_docs_report.md`) with pass/fail + notes.",
