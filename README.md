@@ -21,6 +21,7 @@ This repo takes a different path:
 ## Repo Structure
 
 * `docs/` — **SSOT design**: specs, operator catalog, audit methods, open questions.
+* `docs/primer.md` — **Primer**: plain-language bridge between cell biology terms and SDF operators/workflows.
 * `meta/prompts/` — **Provenance**: `init/`, `emit/`, `audit/` prompts with heredocs.
 * `src/` — **Future code**: stubs for fitting, reconstruction, and APIs.
 * `tests/` — **Test harness**: currently placeholders, target Python ≥3.11 with `pytest`.

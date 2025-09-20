@@ -22,5 +22,5 @@ data/
 *.log
 *.tmp
 *.bak
-meta/prompts/audit/quiet_pub.json
-meta/outputs/quiet_publish_report.md
+
+meta/prompts/_hold/
