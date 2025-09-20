@@ -1,6 +1,6 @@
 {
   "task": "Audit emitted documentation for form and completeness",
-  "objective": "Verify that the SSOT docs are present, properly structured, and well-organized according to the emit_docs.json specification.",
+  "objective": "Verify that the SSOT docs are present, properly structured, and well-organized according to the emit_docs.json specification, including persistence window criteria.",
   "constraints": {
     "style": "Deterministic, checklist-driven, no content reinterpretation",
     "placement": "meta/prompts/audit/"
@@ -19,7 +19,8 @@
     "Required section headings are present per file",
     "No sections are empty or contain placeholders (e.g., TBD, lorem ipsum)",
     "Markdown syntax valid (headings, lists)",
-    "Section order matches the emit_docs.json specification"
+    "Section order matches the emit_docs.json specification",
+    "docs/audit_spec.md includes persistence window checks under Audit Dimensions and Discovery Pipeline"
   ],
   "outputs": {
     "status": "pass | fail",
@@ -31,9 +32,9 @@
       "",
       "## Summary",
       "- **design_spec.md**: PASS - all required sections present, headings correct.",
-      "- **open_questions.md**: PASS - contains all defined open question categories.",
+      "- **open_questions.md**: PASS - contains all defined open question categories, including persistence window question.",
       "- **operator_catalog.md**: PASS - primitives, process, and template sections present.",
-      "- **audit_spec.md**: PASS - audit dimensions and outputs sections included.",
+      "- **audit_spec.md**: PASS - persistence window checks present under Audit Dimensions and Discovery Pipeline.",
       "",
       "## Notes",
       "- No placeholders or empty sections detected.",

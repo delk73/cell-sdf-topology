@@ -1,6 +1,6 @@
 {
   "task": "Emit initial design documentation",
-  "objective": "Generate SSOT docs capturing the Cell SDF Topology research design, including core paradigm, operator catalog, signal/lineage models, and the role of residuals as discovery.",
+  "objective": "Generate SSOT docs capturing the Cell SDF Topology research design, including core paradigm, operator catalog, signal/lineage models, persistence windows, and the role of residuals as discovery.",
   "constraints": {
     "style": "Markdown, clear headings, no filler text",
     "placement": "docs/"
@@ -50,7 +50,8 @@
       "## Audit and Discovery",
       "- **Quality gates**: Hausdorff error < threshold, eikonal regularity, locality checks.",
       "- **Provenance**: each value labeled as measured/interpolated/extrapolated.",
-      "- **Residuals**: systematic mismatches flagged as novelty -> candidate new operators."
+      "- **Residuals**: systematic mismatches flagged as novelty -> candidate new operators.",
+      "- **Persistence windows**: events must persist across time *and* space beyond noise thresholds before being recorded as true topological changes."
     ],
     "docs/open_questions.md": [
       "# Open Questions",
@@ -67,7 +68,7 @@
       "",
       "## Event Detection Robustness",
       "- How to avoid false positives from noise or transient constrictions?",
-      "- What persistence window is biologically reasonable?",
+      "- What persistence window (time + spatial displacement) is biologically reasonable?",
       "",
       "## Compute vs Storage",
       "- Optimal balance between upfront compute for fitting vs long-term storage savings?"
@@ -108,10 +109,15 @@
       "- **Quality gates**: geometric error, signal fidelity, eikonal constraint.",
       "- **Residual analysis**: systematic mismatches flagged.",
       "- **Lineage validation**: tube splits/merges align with persistent topology change.",
+      "- **Persistence window checks**: events must last for ≥N frames and exceed spatial displacement thresholds (beyond imaging noise floor).",
       "",
       "## Discovery Pipeline",
       "- Residuals are not only QC but also signals of new biology.",
       "- Candidate anomalies -> reviewed as potential operator archetypes.",
+      "- Persistence windows vary by process:",
+      "  - Division: 5-10 frames at 1-2 min cadence, separation > voxel resolution.",
+      "  - Fusion: 3-5 frames with enlarging contact patch.",
+      "  - Blebs/protrusions: short-lived; detect via curvature/displacement rather than time gating.",
       "",
       "## Outputs",
       "- Audit reports (`audit_docs_report.md`) with pass/fail + notes.",

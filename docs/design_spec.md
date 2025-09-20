@@ -19,7 +19,7 @@ This document is the single source of truth (SSOT) for the **Cell SDF Topology**
 - Patch model: keyframes + deltas with provenance tags.
 
 ## Lineage Model: Identities and World-Tubes
-- Each cell identity tracked as a soft field Ii(x,t).
+- Each cell identity tracked as a soft field I_i(x,t).
 - World-tubes represent continuous life histories.
 - Division -> tube splits; fusion -> tubes merge.
 - Timing is determined by persistence of topological change and operator schedules (s(t)).
@@ -34,3 +34,4 @@ This document is the single source of truth (SSOT) for the **Cell SDF Topology**
 - **Quality gates**: Hausdorff error < threshold, eikonal regularity, locality checks.
 - **Provenance**: each value labeled as measured/interpolated/extrapolated.
 - **Residuals**: systematic mismatches flagged as novelty -> candidate new operators.
+- **Persistence windows**: events must persist across time *and* space beyond noise thresholds before being recorded as true topological changes.

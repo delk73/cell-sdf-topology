@@ -12,7 +12,7 @@
 
 ## Event Detection Robustness
 - How to avoid false positives from noise or transient constrictions?
-- What persistence window is biologically reasonable?
+- What persistence window (time + spatial displacement) is biologically reasonable?
 
 ## Compute vs Storage
 - Optimal balance between upfront compute for fitting vs long-term storage savings?
