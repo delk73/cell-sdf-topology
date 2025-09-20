@@ -18,6 +18,16 @@ This repo takes a different path:
 * **Lineage as world-tubes**: continuous identity functions across time, not ad-hoc IDs.
 * **Signals anchored**: curves (spectral, temporal) tied directly to surfaces/regions in the SDF.
 
+## Positioning: SDF-first vs. voxel/mesh
+
+Unlike voxel or mesh storage, which **freeze data as heavy arrays or polygons**, the SDF-first approach treats geometry as a **function**.  
+This enables:
+
+* Compact storage (parameters, not pixels).
+* Natural handling of topological changes (splits, merges, blebs).
+* Direct attachment of signals and lineage without lossy conversions.
+* Residuals that surface *new biology* instead of being discarded as error.
+
 ## Repo Structure
 
 * `docs/` - **SSOT design**: specs, operator catalog, audit methods, open questions.
