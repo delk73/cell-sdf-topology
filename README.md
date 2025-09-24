@@ -2,6 +2,16 @@
 
 **Cell SDF Topology** is a research repo exploring **time-conditioned signed distance fields (SDFs)** as the **single source of truth (SSOT)** for representing cells, their topology-changing processes, and attached signals.
 
+## Relation to Synesthetic OS
+
+This repository is a research sandbox for exploring **cellular and topological operators** in the context of signed distance fields (SDFs).  
+
+- **Use cases** (controls, perceptual field mapping, topology) are **defined and versioned in [`synesthetic-schemas`](https://github.com/delk73/synesthetic-schemas)**.  
+- **Platform integration** happens in [`sdfk`](https://github.com/delk73/sdfk), where validated operators become schema-backed controls and interactive elements.  
+- **This repo** focuses strictly on **operator-level research**: world-tubes, cellular packing, hyperspectral overlaps, and other constructs that may later be promoted into schemas.  
+
+When an operator here proves stable and broadly useful, it will be **graduated into `synesthetic-schemas`** and ultimately used in the Synesthetic OS.
+
 ## Why this repo exists
 
 Most bioimaging pipelines are **voxel-centric** (OME-NGFF, HDF5, segmentation masks) or **mesh-centric** (surface triangulations). They store massive arrays or polygon soups that are:
