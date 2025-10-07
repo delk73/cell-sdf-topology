@@ -1,0 +1,16 @@
+version: draft
+id: equivariant_inr
+source: "Wiesner et al., 2023"
+title: SO(3)-Equivariant INR
+domain: reconstruction
+input:
+  - x
+  - t
+  - R
+output: f_theta(x, t, z)
+invariants:
+  - rotation
+analogy: observation-frame invariance
+notes: |
+  Draft operator inspired by rotation-equivariant implicit neural representations for cell SDF reconstruction.
+  Serves as a bridge between learned INRs and the world-tube operator catalog.

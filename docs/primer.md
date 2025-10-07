@@ -1,66 +1,145 @@
-# Primer - Cell SDF Topology
+# Primer — Cell SDF Topology
 
-This primer explains the biology terms and how they map to our **SDF-first** approach in plain language.
+## Context and Reference
 
-## Core idea
-- **SDF-first:** represent a cell surface by a function that returns distance to the surface, not by voxel blobs or polygon meshes.
-- **Time-conditioned:** the function depends on time, so shapes change smoothly.
-- **Operators:** small, reusable shape changes (division, fusion, bleb, ruffle...) we **fit to data**.
-- **Residuals:** where the fit is consistently bad, we treat that error as **discovery signal** for new operators.
-- **World-tubes (lineage):** identities tracked as continuous tubes through spacetime; splits/merges are events, not file forks.
-- **Signals anchored:** intensities/spectra sampled at consistent offsets from the surface, so curves are comparable across cells and time.
+**Wiesner, D. et al. (2023).** *Generative Modeling of Living Cells with SO(3)-Equivariant Implicit Neural Representations.*
+*Medical Image Analysis.* [arXiv:2304.08960](https://arxiv.org/abs/2304.08960)
 
-## Biology <-> Operator mapping (quick guide)
+Independently develops a time-conditioned SDF framework for modeling cell morphology with rotation-equivariant implicit neural networks.
+Its findings converge with the principles explored in **cell-sdf-topology**—continuous, function-based representations of living form evolving through time—offering empirical support for similar geometric intuitions.
 
-| Term | Plain meaning | In data | SDF operator idea | Fit notes |
-|---|---|---|---|---|
-| **Blebbing** | Round blister on membrane | Smooth cap with narrow neck | Local lobe (soft-union) + neck constraint | Fit Gaussian-like lobe: position, width, amplitude; enforce min neck radius. |
-| **Ruffling** | Wavy ripples at an edge | Repeating ridges | Sinusoidal offset along tangent frame | Detect periodic curvature; smaller amp than blebs. |
-| **Lamellipodium** | Thin sheet-like extension | Broad flat flange | Anisotropic offset + taper | Thickness << lateral extent; may co-occur with ruffles. |
-| **Filopodia** | Thin spikes | Long slender protrusions | Slender rod union (centerline + radius) | High aspect ratio; require temporal persistence. |
-| **Mitotic rounding** | Cell rounds before division | Global smoothing | Isotropic scale deformation | Often precedes cleavage; do not call division yet. |
-| **Cleavage furrow (division)** | Constriction that splits one cell into two | Saddle-like groove deepening | Soft-difference along plane/curved plane + depth schedule | Commit split when topology separates and **persists**. |
-| **Fusion / neck** | Two cells connect/merge | Hourglass throat that thickens | Soft-union with throat (centerline + radius profile) | Commit merge when components become one and persist. |
-| **Budding** | Daughter sprouts then pinches | Small lobe grows then splits | Local lobe + neck -> eventual division | Monotonic growth to scission. |
+---
 
-## Fitting workflow (no math)
-1) **Start from voxels:** denoise -> boundary likelihood -> initial SDF.
-2) **Propose operators** in candidate regions (bulge, ripple, neck...).
-3) **Fit smallest operator** that explains the change (few parameters).
-4) **Check persistence** over a short time window before committing events.
-5) **Record parameters** (positions, sizes, schedules) instead of big volumes.
-6) **Compute residuals** (mismatch map near the surface). Persistent clusters -> candidate new operator types.
+## Purpose
 
-## Lineage as world-tubes
-- Each identity is a soft ownership field over space-time -> a **tube**.
-- **Split:** when the surface truly breaks into two and the change persists, fork the tube (parent -> children).
-- **Merge:** when two surfaces become one and persist, merge tubes.
-- Geometry SSOT stays one function; lineage is an overlay tied to event schedules.
+**cell-sdf-topology** is motivated by the need to describe cellular morphodynamics in a rigorous, quantitative, and continuous way.
+Traditional voxel or mesh methods fragment motion into discrete frames; this framework treats form and change as a single mathematical object.
 
-## Signals anchored to surfaces/regions
-- Sample at consistent offsets from the SDF zero-level (e.g., -100 nm, 0, +200 nm).
-- Attach curves (temporal/spectral) to regions (membrane, cortex, cytosol).
-- Same rule -> comparable curves across cells and time, independent of raw voxel resolution.
+---
 
-## Storage & search (later work)
-- **SSOT (structured):** base SDF, fitted operator params, schedules, lineage, and signal attachments (Postgres/JSONB or similar).
-- **Vector index (derived):** embeddings for similarity search (operator params, curve descriptors, lineage patterns) in FAISS/pgvector/Milvus.
-- Keep the vector index **derivative** so SSOT remains minimal and auditable.
+## Core Idea
 
-## Residuals as discovery
-- After every fit, compute mismatch near the surface.
-- Random noise -> ignore. **Persistent clusters** -> propose a new operator archetype.
-- This is how the catalog grows from real data, not hand-waving.
+* **SDF-first:** Represent each cell by a function returning distance to its surface—compact, differentiable, and naturally extensible.
+* **Time-conditioned:** The function depends on time; form and motion are unified.
+* **Operators:** Reusable primitives (division, fusion, bleb, ruffle …) fitted to data to explain observed changes.
+* **Residuals:** Persistent mismatches expose *new biology*—they define the discovery frontier.
+* **World-tubes:** Continuous identities extruded through space-time. Splits and merges become topological events, not bookkeeping hacks.
+* **Anchored signals:** Spectral or temporal measurements attached directly to the SDF manifold for consistent comparison across time and cells.
 
-## Minimal mental model
-- **Cells are programs:** base shape + a few timed operators.
-- **Events are schedules:** small timelines (onset, growth, decay) per operator.
-- **IDs ride on top:** lineage labels tied to actual surface change.
-- **Signals follow the surface:** always sampled the same way relative to the SDF.
+---
 
-## Glossary (one-liners)
-- **SDF:** function giving signed distance to a surface (negative inside, positive outside).
-- **Operator:** reusable, parameterized shape change (e.g., lobe, ripple, furrow, neck).
-- **Schedule:** time program (0->1) controlling an operator's strength.
-- **World-tube:** a cell's continuous identity in (x,y,z,t), used for lineage.
-- **Residual:** remaining mismatch after fitting; used for QC and discovery.
+## Biological Mapping (Quick Guide)
+
+| Term                 | Plain Meaning             | In Data                  | SDF-Operator Analogy                         | Fit Notes                                        |
+| -------------------- | ------------------------- | ------------------------ | -------------------------------------------- | ------------------------------------------------ |
+| **Blebbing**         | Local blister on membrane | Smooth cap + narrow neck | Local lobe + neck constraint                 | Gaussian lobe; enforce minimum neck radius.      |
+| **Ruffling**         | Wavy surface ripples      | Periodic ridges          | Sinusoidal offset along tangent              | Detect periodic curvature; small amplitude.      |
+| **Lamellipodium**    | Thin sheet extension      | Broad flange             | Anisotropic offset + taper                   | Thickness ≪ lateral extent.                      |
+| **Filopodia**        | Thin spike                | Slender protrusion       | Rod union (centerline + radius)              | High aspect ratio; temporal persistence.         |
+| **Mitotic rounding** | Pre-division smoothing    | Global contraction       | Isotropic scale deformation                  | Precedes cleavage.                               |
+| **Cleavage furrow**  | Division constriction     | Saddle groove            | Soft-difference along plane + depth schedule | Commit split when topology separates & persists. |
+| **Fusion / neck**    | Merge of cells            | Hourglass throat         | Soft-union with throat radius profile        | Commit when unified volume persists.             |
+| **Budding**          | Daughter sprout           | Lobe → neck → split      | Local lobe + neck evolution                  | Extrudes new branch in world-tube.               |
+
+---
+
+## Fitting Workflow (Intuitive)
+
+1. **From voxels:** Denoise → boundary likelihood → initial SDF.
+2. **Propose operators** in candidate regions.
+3. **Fit minimal operator** explaining the change.
+4. **Check persistence** before confirming events.
+5. **Record parameters** instead of bulky volumes.
+6. **Analyze residuals**; persistent clusters → new operator archetypes.
+
+---
+
+## Lineage as World-Tubes
+
+* Each identity is a continuous ownership field through space-time.
+* **Split:** One surface separates into two → fork the tube.
+* **Merge:** Two surfaces fuse → merge tubes.
+* The SDF remains a single coherent function; lineage overlays handle identity.
+* Continuity is intrinsic—no arbitrary ID tracking.
+
+---
+
+## Dimensional Analogy
+
+| Spatial Dim                    | Extruded Form                | Physical Meaning             | Biological Analogy                  |
+| ------------------------------ | ---------------------------- | ---------------------------- | ----------------------------------- |
+| **0D (point)**                 | **1D world-line**            | Particle path through time   | Molecule trajectory.                |
+| **1D (curve)**                 | **2D world-sheet**           | Filament deformation         | Cytoskeletal fiber dynamics.        |
+| **2D (surface)**               | **3D world-tube**            | Membrane evolving            | Cell membrane history.              |
+| **3D (volume)**                | **4D world hyper-tube**      | Body evolving                | Organism’s life history.            |
+| **4D (hyper-volume)**          | **5D evolutionary manifold** | Changing rules of change     | Developmental or genetic evolution. |
+| **5D (manifold of histories)** | **6D entangled field-space** | Coupled systems of histories | Ecosystem-scale co-evolution.       |
+
+---
+
+## Signals Anchored to Surfaces
+
+* Sample consistently at fixed offsets (e.g., –100 nm / 0 / +200 nm).
+* Attach curves for temporal or spectral data.
+* In world-tubes, these become fields defined on the manifold—like texture on a surface.
+
+---
+
+## Data & Storage
+
+* **SSOT (core):** SDF, operator parameters, schedules, lineage, signals.
+* **Derived index:** Vector embeddings for similarity search (FAISS / pgvector / Milvus).
+* Keep SSOT minimal and auditable; indices are regenerable.
+
+---
+
+## Residuals as Discovery
+
+Persistent residuals near the surface mark phenomena the current operator basis cannot express—signals for new biology or model expansion.
+
+---
+
+## Geometry of Perception
+
+World-tubes may mirror perceptual organization itself: a continuous manifold of experience.
+
+| SDF World-Tube Construct | Perceptual Analog          |
+| ------------------------ | -------------------------- |
+| (f(x,y,z,t)=0)           | Unified field of awareness |
+| (\nabla_{xyz}f)          | Static form perception     |
+| (\partial f/\partial t)  | Motion perception          |
+| Higher-order terms       | Momentum / anticipation    |
+| Anchored signals         | Sensory qualities          |
+| Topological events       | Perceived discrete events  |
+
+---
+
+## Limits of Representation — The Observation Dimension
+
+Every self-representing system encounters an unmodeled dimension: the observer.
+Residuals play the role of Gödel sentences—truths outside the current formal basis.
+Completeness is asymptotic; the remainder marks the **discovery frontier**.
+
+---
+
+## Minimal Mental Model
+
+* **Cells as programs:** Base shape + timed operators.
+* **Events as schedules:** Onset → growth → decay.
+* **Lineage intrinsic:** Geometry carries identity.
+* **Signals follow surface:** Consistent sampling rules.
+* **History = geometry:** Time extruded into form.
+
+---
+
+## Glossary
+
+| Term                   | Meaning                                             |
+| ---------------------- | --------------------------------------------------- |
+| **SDF**                | Signed distance to a surface (– inside, + outside). |
+| **Operator**           | Parameterized shape change primitive.               |
+| **Schedule**           | Time-domain envelope controlling an operator.       |
+| **World-tube**         | Continuous identity in (x,y,z,t).                   |
+| **Residual**           | Persistent mismatch → discovery cue.                |
+| **Manifold**           | Continuous geometric surface of the SDF.            |
+| **Discovery Frontier** | Region where new operators emerge.                  |

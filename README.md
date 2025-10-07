@@ -211,3 +211,5 @@ but the best self-consistent slice of it that can be held inside geometry.
 
 * License: MIT.
 * Cite via `CITATION.cff` (GitHub will generate BibTeX/APA automatically).
+
+For related work on time-conditioned SDFs via neural representations, see Wiesner et al., 2023.
