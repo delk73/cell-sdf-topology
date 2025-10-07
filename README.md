@@ -1,9 +1,3 @@
--
-version: v0.1.0
-lastReviewed: 2025-10-07
-owner: delk73
--
-
 # cell-sdf-topology
 
 > **Time-conditioned signed distance fields (SDFs)** as continuous geometric records of living form - representing cells, their shape changes, and attached signals as unified *world-tubes* through time.
@@ -12,7 +6,7 @@ owner: delk73
 
 It serves as a research sandbox for **time-conditioned signed distance fields (SDFs)** - a way of treating both form and evolution as a unified field, suitable for representing cells, topology-changing processes, and attached signals.
 
--
+---
 
 ## Concept
 
@@ -27,35 +21,24 @@ That extrusion forms a continuous "tube" in space-time:
 This is the **world-tube** - a smooth geometric object that contains the entire history of a shape.
 What once was animation becomes topology.
 
--
+---
 
 ## Dimensional Analogy
 
-| Spatial Dim    | Extruded Form       | Meaning                                   |
-| - | - | - |
-| 0D (a point)   | 1D world-line       | a moving point's trace                    |
-| 1D (a curve)   | 2D world-sheet      | a deforming curve through time            |
-| 2D (a surface) | 3D world-tube       | a deforming boundary through time         |
-| 3D (a volume)  | 4D world hyper-tube | a living volume's full temporal evolution |
+| Spatial Dim                      | Extruded Form                | Physical Meaning                                                            | Biological Analogy                                                                                                                                                               |
+| -------------------------------- | ---------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **0D (a point)**                 | **1D world-line**            | A particle’s position traced through time                                   | A single molecule or ion’s trajectory — diffusion path of one signaling molecule                                                                                                 |
+| **1D (a curve)**                 | **2D world-sheet**           | A filament’s deformation through time                                       | A cytoskeletal filament (e.g., actin, microtubule) growing, bending, and remodeling through time                                                                                 |
+| **2D (a surface)**               | **3D world-tube**            | A membrane or boundary evolving through time                                | A cell membrane undergoing division, migration, or morphogenesis — its “world-tube” represents the full motion and shape evolution of that cell                                  |
+| **3D (a volume)**                | **4D world hyper-tube**      | A volumetric body evolving through time                                     | A full cell or multicellular organism’s 4D life history — capturing both morphology and state transitions across its lifespan                                                    |
+| **4D (a hyper-volume)**          | **5D evolutionary manifold** | The space of all possible histories — how rules of change themselves evolve | Lineage and evolutionary processes: developmental programs, gene networks, and morphogenetic constraints shifting across generations                                             |
+| **5D (a manifold of histories)** | **6D entangled field-space** | Interacting systems of evolving manifolds — coupling across histories       | Ecosystem- or biosphere-scale coupling: co-evolving species, metabolic and environmental feedbacks, where the “field” of life’s coherence spans multiple interacting world-tubes |
 
 Each new dimension "blooms" the representation - adding another axis of experience.
 The tube describes not only where something *is*, but also where it *has been* and *is becoming*.
 
--
+---
 
-## Mathematical Form
-
-Let ( f(\mathbf{x}, t) ) be the signed distance field,
-where (\mathbf{x} \in \mathbb{R}^N) and (t) represents time.
-
-The zero level set ( f(\mathbf{x}, t) = 0 ) defines the boundary of the shape at each moment.
-The union of all such boundaries forms a manifold in ((N+1))-dimensional space -
-the **world-tube**, or **world-volume** in higher dimensions.
-
-Spatial gradients describe surface normals; temporal gradients describe motion.
-Curvature along time encodes persistence and velocity.
-
--
 
 ## Relation to Synesthetic OS
 
@@ -68,7 +51,7 @@ It focuses on **operator-level research** - developing the mathematical and geom
 
 When an operator here proves stable and broadly useful, it is **graduated into `synesthetic-schemas`** and used within the Synesthetic OS runtime.
 
--
+---
 
 ## Why This Repository Exists
 
@@ -87,7 +70,7 @@ This project takes a different path:
 * **Lineage as world-tubes** - continuous identity functions across time, not ad hoc IDs.
 * **Signals anchored** - spectral or temporal curves tied directly to surfaces or regions in the SDF.
 
--
+---
 
 ## Positioning: SDF-First vs. Voxel/Mesh
 
@@ -100,7 +83,7 @@ This enables:
 * Direct attachment of signals and lineage without lossy conversions.
 * Residuals that surface *new biology* instead of being discarded as error.
 
--
+---
 
 ## Why This Approach
 
@@ -222,7 +205,7 @@ but the best self-consistent slice of it that can be held inside geometry.
 * Documentation passes audit.
 * Ready for public release as a reference repository.
 
--
+--
 
 ## License & Citation
 
